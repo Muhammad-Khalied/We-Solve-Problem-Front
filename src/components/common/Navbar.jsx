@@ -1,22 +1,12 @@
 import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
-import { HiOutlineArrowRightOnRectangle, HiOutlineSun, HiOutlineMoon, HiOutlineBars3 } from 'react-icons/hi2';
-import { useState, useEffect } from 'react';
+import { HiOutlineArrowRightOnRectangle, HiOutlineBars3 } from 'react-icons/hi2';
+import ThemeToggle from './ThemeToggle';
 import './Navbar.css';
 
 const Navbar = ({ onMenuClick }) => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
-  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'dark');
-
-  useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem('theme', theme);
-  }, [theme]);
-
-  const toggleTheme = () => {
-    setTheme(prev => prev === 'dark' ? 'light' : 'dark');
-  };
 
   const handleLogout = () => {
     logout();
@@ -44,9 +34,7 @@ const Navbar = ({ onMenuClick }) => {
           <div className="score-badge" title="Total score">
             ⭐ {user?.totalScore || 0}
           </div>
-          <button className="btn btn-ghost btn-icon" onClick={toggleTheme} title="Toggle Theme">
-            {theme === 'dark' ? <HiOutlineSun size={20} /> : <HiOutlineMoon size={20} />}
-          </button>
+          <ThemeToggle />
           <button className="btn btn-ghost btn-icon" onClick={handleLogout} title="Logout">
             <HiOutlineArrowRightOnRectangle size={20} />
           </button>

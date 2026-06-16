@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import toast from 'react-hot-toast';
 import './Auth.css';
+import ThemeToggle from '../components/common/ThemeToggle';
 
 const Register = () => {
   const [form, setForm] = useState({ name: '', email: '', password: '', classSection: '' });
@@ -28,6 +29,7 @@ const Register = () => {
 
   return (
     <div className="auth-page">
+      <ThemeToggle style={{ position: 'absolute', top: '1.5rem', right: '1.5rem', zIndex: 10, background: 'var(--bg-elevated)', borderRadius: '50%', padding: '0.75rem', width: 'auto', height: 'auto', border: '1px solid var(--border-color)' }} iconSize={24} />
       <div className="auth-bg-shapes">
         <div className="shape shape-1"></div>
         <div className="shape shape-2"></div>
