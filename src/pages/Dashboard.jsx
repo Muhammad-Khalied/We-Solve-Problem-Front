@@ -27,11 +27,13 @@ const Dashboard = () => {
 
   const COLORS = ['#6C63FF', '#EC4899', '#22C55E', '#F59E0B', '#06B6D4'];
 
-  const pieData = stats?.subjectProgress?.map((s, i) => ({
-    name: s.subject.name,
-    value: s.completedTasks || 1,
-    color: COLORS[i % COLORS.length]
-  })) || [];
+  const pieData = stats?.subjectProgress
+    ?.filter(s => s.completedTasks > 0)
+    ?.map((s, i) => ({
+      name: s.subject.name,
+      value: s.completedTasks,
+      color: COLORS[i % COLORS.length]
+    })) || [];
 
   return (
     <div className="dashboard-page">
