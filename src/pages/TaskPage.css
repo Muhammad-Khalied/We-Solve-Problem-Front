@@ -278,7 +278,12 @@
   .chat-panel.open { width: 320px; }
 }
 @media (max-width: 768px) {
-  .task-page { flex-direction: column; }
+  .task-page { 
+    flex-direction: column; 
+    margin: calc(-1 * var(--spacing-md));
+    margin-top: calc(-1 * var(--spacing-md));
+    height: calc(100dvh - var(--navbar-height));
+  }
   .chat-panel.open {
     width: 100%;
     position: fixed;

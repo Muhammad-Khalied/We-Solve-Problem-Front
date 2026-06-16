@@ -182,4 +182,12 @@
   .skill-edit-col {
     grid-column: 2 / -1;
   }
+  .roadmap-header-actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+  }
+  .roadmap-header-actions button {
+    width: 100%;
+  }
 }

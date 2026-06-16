@@ -264,7 +264,7 @@ const AIContentGenerator = () => {
               <button className="btn-icon" onClick={() => setAttachedFile(null)} style={{ padding: '0.125rem', color: 'var(--text-muted)' }}><HiOutlineXMark size={14}/></button>
             </div>
           )}
-          <div style={{ display: 'flex', gap: 'var(--spacing-sm)', width: '100%' }}>
+          <div className="ai-gen-input-controls" style={{ display: 'flex', gap: 'var(--spacing-sm)', width: '100%' }}>
             <input 
               type="file" 
               ref={fileInputRef} 

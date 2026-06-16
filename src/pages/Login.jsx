@@ -28,7 +28,6 @@ const Login = () => {
 
   return (
     <div className="auth-page">
-      <ThemeToggle style={{ position: 'absolute', top: '1.5rem', right: '1.5rem', zIndex: 10, background: 'var(--bg-elevated)', borderRadius: '50%', padding: '0.75rem', width: 'auto', height: 'auto', border: '1px solid var(--border-color)' }} iconSize={24} />
       <div className="auth-bg-shapes">
         <div className="shape shape-1"></div>
         <div className="shape shape-2"></div>
@@ -36,6 +35,9 @@ const Login = () => {
       </div>
 
       <div className="auth-container">
+        <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '1rem' }}>
+          <ThemeToggle style={{ background: 'var(--bg-elevated)', borderRadius: '50%', padding: '0.75rem', width: 'auto', height: 'auto', border: '1px solid var(--border-color)' }} iconSize={24} />
+        </div>
         <div className="auth-card">
           <div className="auth-header">
             <img src="/logo.png" alt="WE solve problems logo" className="auth-logo" style={{ width: '64px', height: '64px', margin: '0 auto', marginBottom: '1rem', objectFit: 'contain' }} />

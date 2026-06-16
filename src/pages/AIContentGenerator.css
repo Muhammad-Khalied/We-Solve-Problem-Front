@@ -303,4 +303,10 @@
     height: auto;
     min-height: 500px;
   }
+  .ai-gen-input-controls {
+    flex-direction: column;
+  }
+  .ai-gen-input-controls button {
+    width: 100%;
+  }
 }
