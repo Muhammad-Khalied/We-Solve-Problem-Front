@@ -1,0 +1,41 @@
+.admin-page { max-width: 1200px; }
+
+.admin-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-lg);
+}
+
+.admin-section { padding: var(--spacing-xl); }
+.admin-section h3 { margin-bottom: var(--spacing-lg); }
+
+.section-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: var(--spacing-lg);
+}
+.section-header h3 { margin-bottom: 0; }
+
+.admin-students-list { display: flex; flex-direction: column; gap: 0.5rem; }
+.admin-student-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--radius-lg);
+  background: var(--bg-card);
+  transition: background var(--transition-fast);
+}
+.admin-student-row:hover { background: var(--bg-card-hover); }
+
+.admin-student-info {
+  display: flex; align-items: center; gap: var(--spacing-sm);
+}
+.admin-student-name { font-weight: 600; font-size: 0.875rem; display: block; }
+.admin-student-class { font-size: 0.75rem; color: var(--text-muted); }
+
+.admin-student-stats {
+  display: flex; gap: var(--spacing-md);
+  font-size: 0.8125rem; color: var(--text-secondary);
+}
+
+@media (max-width: 768px) {
+  .admin-grid { grid-template-columns: 1fr; }
+}

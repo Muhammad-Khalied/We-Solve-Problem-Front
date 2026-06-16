@@ -1,0 +1,306 @@
+.ai-generator-page {
+  max-width: 1200px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-lg);
+  min-height: calc(100vh - var(--navbar-height) - 4rem);
+}
+
+/* Chat Panel */
+.ai-gen-chat {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - var(--navbar-height) - 6rem);
+}
+
+.ai-gen-chat-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.ai-gen-chat-header h3 {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.1rem;
+}
+
+.ai-gen-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--spacing-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.ai-gen-msg {
+  max-width: 90%;
+  display: flex;
+  flex-direction: column;
+}
+
+.ai-gen-msg.user {
+  align-self: flex-end;
+}
+
+.ai-gen-msg.assistant {
+  align-self: flex-start;
+}
+
+.ai-gen-bubble {
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--radius-lg);
+  font-size: 0.875rem;
+  line-height: 1.6;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+}
+
+.ai-gen-msg.user .ai-gen-bubble {
+  background: var(--primary-700);
+  color: white;
+  border-bottom-right-radius: var(--radius-sm);
+}
+
+.ai-gen-msg.assistant .ai-gen-bubble {
+  background: var(--bg-elevated);
+  color: var(--text-primary);
+  border-bottom-left-radius: var(--radius-sm);
+}
+
+.ai-gen-input-form {
+  display: flex;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md);
+  border-top: 1px solid var(--border-color);
+}
+
+.ai-gen-input-form textarea {
+  flex: 1;
+  resize: none;
+  min-height: 60px;
+  max-height: 160px;
+  font-family: var(--font-family);
+  font-size: 0.875rem;
+}
+
+/* Preview Panel */
+.ai-gen-preview {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - var(--navbar-height) - 6rem);
+}
+
+.ai-gen-preview-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.ai-gen-preview-header h3 {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.1rem;
+}
+
+.ai-gen-preview-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--spacing-md);
+}
+
+/* Skill preview card */
+.gen-skill-card {
+  margin-bottom: var(--spacing-lg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  background: var(--gradient-card);
+}
+
+.gen-skill-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-bottom: 1px solid var(--border-color);
+  background: rgba(108, 99, 255, 0.05);
+}
+
+.gen-skill-info {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.gen-skill-info .gen-skill-icon {
+  font-size: 1.5rem;
+}
+
+.gen-skill-info h4 {
+  font-size: 1rem;
+  margin-bottom: 0.125rem;
+}
+
+.gen-skill-info p {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.gen-skill-actions {
+  display: flex;
+  gap: var(--spacing-xs);
+  align-items: center;
+}
+
+/* Subject selector in accept flow */
+.gen-subject-select {
+  padding: 0.375rem 0.625rem;
+  font-size: 0.8125rem;
+  background: var(--bg-input);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+}
+
+/* Task preview within skill */
+.gen-task-item {
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-bottom: 1px solid var(--border-color);
+  transition: background var(--transition-fast);
+}
+
+.gen-task-item:last-child {
+  border-bottom: none;
+}
+
+.gen-task-item:hover {
+  background: var(--bg-card-hover);
+}
+
+.gen-task-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.25rem;
+}
+
+.gen-task-title {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.gen-task-badges {
+  display: flex;
+  gap: 0.375rem;
+  align-items: center;
+}
+
+.gen-task-desc {
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  max-height: 60px;
+  overflow: hidden;
+}
+
+.gen-task-meta {
+  display: flex;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-xs);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+/* Expand/collapse task detail */
+.gen-task-detail {
+  margin-top: var(--spacing-sm);
+  padding: var(--spacing-sm);
+  background: var(--bg-input);
+  border-radius: var(--radius-md);
+  font-size: 0.8125rem;
+}
+
+.gen-task-detail pre {
+  margin: 0.25rem 0;
+  padding: var(--spacing-sm);
+  background: var(--bg-primary);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  color: var(--text-secondary);
+}
+
+.gen-task-detail h5 {
+  font-size: 0.8125rem;
+  margin-top: var(--spacing-sm);
+  color: var(--text-primary);
+}
+
+/* Empty state */
+.ai-gen-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  text-align: center;
+  color: var(--text-muted);
+  gap: var(--spacing-md);
+}
+
+.ai-gen-empty-icon {
+  font-size: 3rem;
+  opacity: 0.5;
+}
+
+.ai-gen-empty p {
+  max-width: 300px;
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+/* Accepted badge */
+.accepted-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem 0.625rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: var(--radius-full);
+  background: rgba(34, 197, 94, 0.15);
+  color: var(--success-400);
+}
+
+.refused-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem 0.625rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border-radius: var(--radius-full);
+  background: rgba(239, 68, 68, 0.15);
+  color: var(--danger-400);
+}
+
+@media (max-width: 900px) {
+  .ai-generator-page {
+    grid-template-columns: 1fr;
+  }
+  .ai-gen-chat,
+  .ai-gen-preview {
+    height: auto;
+    min-height: 500px;
+  }
+}
