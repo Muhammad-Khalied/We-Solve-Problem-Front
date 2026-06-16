@@ -296,7 +296,7 @@ const TaskPage = () => {
               )}
 
               {submission?.status === 'passed' && task.solution && (
-                <div className="solution-panel">
+                <div className="solution-panel" style={{ marginTop: 'var(--spacing-xl)' }}>
                   <h4>✨ Solution</h4>
                   <pre><code>{task.solution}</code></pre>
                   {task.explanation && <p className="explanation">{task.explanation}</p>}
@@ -322,22 +322,25 @@ const TaskPage = () => {
 
           {/* AI Feedback Section (Appears after passing) */}
           {submission?.status === 'passed' && (
-            <div className="card" style={{ marginTop: 'var(--spacing-lg)', padding: 'var(--spacing-lg)' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 'var(--spacing-md)' }}>
-                <h3>✨ AI Feedback</h3>
-                {!aiFeedback && (
-                  <button className="btn btn-primary" onClick={handleGetFeedback} disabled={loadingFeedback}>
-                    <HiOutlineSparkles /> {loadingFeedback ? 'Analyzing...' : 'Get Feedback on My Solution'}
+            <div style={{ marginTop: 'var(--spacing-xl)', marginBottom: 'var(--spacing-xl)' }}>
+              {!aiFeedback && !loadingFeedback ? (
+                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                  <button className="btn btn-primary btn-lg" onClick={handleGetFeedback} style={{ padding: '0.875rem 2rem', fontSize: '1rem', boxShadow: '0 8px 20px rgba(108, 99, 255, 0.3)' }}>
+                    <HiOutlineSparkles size={20} /> Get AI Feedback on My Solution
                   </button>
-                )}
-              </div>
-              
-              {loadingFeedback && (
-                <div style={{ textAlign: 'center', padding: 'var(--spacing-md)' }}>
-                  <div className="spinner" style={{ margin: '0 auto var(--spacing-sm)' }}></div>
-                  <p style={{ color: 'var(--text-secondary)' }}>AI is evaluating your skills... this may take a few seconds.</p>
                 </div>
-              )}
+              ) : (
+                <div className="card" style={{ padding: 'var(--spacing-lg)' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 'var(--spacing-md)' }}>
+                    <h3>✨ AI Feedback</h3>
+                  </div>
+                  
+                  {loadingFeedback && (
+                    <div style={{ textAlign: 'center', padding: 'var(--spacing-xl)' }}>
+                      <div className="spinner" style={{ margin: '0 auto var(--spacing-md)', width: '48px', height: '48px' }}></div>
+                      <p style={{ color: 'var(--text-secondary)' }}>AI is evaluating your skills... this may take a few seconds.</p>
+                    </div>
+                  )}
               
               {aiFeedback && (
                 <div className="feedback-markdown" dangerouslySetInnerHTML={{
@@ -359,7 +362,7 @@ const TaskPage = () => {
                   <div className="card" style={{ background: 'rgba(239, 68, 68, 0.08)', borderColor: 'rgba(239, 68, 68, 0.15)', padding: 'var(--spacing-md)' }}>
                     <h4 style={{ marginBottom: 'var(--spacing-sm)' }}>📈 Areas to Improve</h4>
                     <ul style={{ margin: 0, paddingLeft: '1.2rem', color: 'var(--text-secondary)', fontSize: '0.875rem' }}>
-                      {aiFeedback.weaknesses?.map((w, i) => <li key={i} style={{ padding: '0.25rem 0' }}>{w}</li>)}
+                      {aiFeedback.improvements?.map((imp, i) => <li key={i} style={{ padding: '0.25rem 0' }}>{imp}</li>)}
                     </ul>
                   </div>
                 </div>
@@ -367,7 +370,9 @@ const TaskPage = () => {
             </div>
           )}
         </div>
-      </div>
+      )}
+    </div>
+  </div>
 
       {/* RIGHT: AI Chat Panel */}
       <div className={`chat-panel ${chatOpen ? 'open' : ''}`}>
