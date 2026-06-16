@@ -35,7 +35,7 @@ const Register = () => {
         <div className="shape shape-3"></div>
       </div>
       <div className="auth-container">
-        <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '1rem' }}>
+        <div className="auth-theme-toggle">
           <ThemeToggle style={{ background: 'var(--bg-elevated)', borderRadius: '50%', padding: '0.75rem', width: 'auto', height: 'auto', border: '1px solid var(--border-color)' }} iconSize={24} />
         </div>
         <div className="auth-card">

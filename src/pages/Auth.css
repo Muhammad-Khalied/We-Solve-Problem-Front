@@ -118,3 +118,22 @@
   color: var(--primary-400);
   font-weight: 600;
 }
+
+.auth-theme-toggle {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  z-index: 20;
+}
+
+@media (max-width: 768px) {
+  .auth-theme-toggle {
+    position: relative;
+    top: 0;
+    right: 0;
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 1rem;
+    width: 100%;
+  }
+}
