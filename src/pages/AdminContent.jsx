@@ -14,6 +14,7 @@ import {
 import toast from 'react-hot-toast';
 import SkillModal from '../components/admin/SkillModal';
 import TaskModal from '../components/admin/TaskModal';
+import SubjectModal from '../components/admin/SubjectModal';
 import './AdminContent.css';
 
 const AdminContent = () => {
@@ -22,7 +23,7 @@ const AdminContent = () => {
   const [subjects, setSubjects] = useState([]);
   
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState('skills');
+  const [activeTab, setActiveTab] = useState('subjects');
 
   // Filtering & Search
   const [searchQuery, setSearchQuery] = useState('');
@@ -32,6 +33,7 @@ const AdminContent = () => {
   // Modal states
   const [isSkillModalOpen, setIsSkillModalOpen] = useState(false);
   const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
+  const [isSubjectModalOpen, setIsSubjectModalOpen] = useState(false);
   const [editingItem, setEditingItem] = useState(null);
 
   const fetchData = async () => {
@@ -68,10 +70,44 @@ const AdminContent = () => {
     setIsTaskModalOpen(true);
   };
 
+  const handleOpenSubjectModal = (subject = null) => {
+    setEditingItem(subject);
+    setIsSubjectModalOpen(true);
+  };
+
   const handleCloseModals = () => {
     setIsSkillModalOpen(false);
     setIsTaskModalOpen(false);
+    setIsSubjectModalOpen(false);
     setEditingItem(null);
+  };
+
+  // --- SUBJECT CRUD ---
+  const handleSaveSubject = async (formData) => {
+    try {
+      if (editingItem) {
+        await api.put(`/admin/subjects/${editingItem._id}`, formData);
+        toast.success('Subject updated successfully');
+      } else {
+        await api.post('/admin/subjects', formData);
+        toast.success('Subject created successfully');
+      }
+      handleCloseModals();
+      fetchData();
+    } catch (err) {
+      toast.error(err.response?.data?.message || 'Failed to save subject');
+    }
+  };
+
+  const handleDeleteSubject = async (id) => {
+    if (!window.confirm('CAUTION: Are you sure you want to delete this subject? This will PERMANENTLY delete ALL skills, tasks, submissions, and chat histories under it!')) return;
+    try {
+      await api.delete(`/admin/subjects/${id}`);
+      toast.success('Subject deleted successfully');
+      fetchData();
+    } catch (err) {
+      toast.error(err.response?.data?.message || 'Failed to delete subject');
+    }
   };
 
   // --- SKILL CRUD ---
@@ -145,6 +181,12 @@ const AdminContent = () => {
     return matchesSearch && matchesDiff && matchesType;
   });
 
+  const filteredSubjects = subjects.filter(subject => {
+    const matchesSearch = subject.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                          subject.description.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesSearch;
+  });
+
   const getTaskIcon = (type) => {
     switch (type) {
       case 'code': return <HiOutlineCodeBracket />;
@@ -169,13 +211,19 @@ const AdminContent = () => {
         </div>
         <button 
           className="btn btn-primary"
-          onClick={() => activeTab === 'skills' ? handleOpenSkillModal() : handleOpenTaskModal()}
+          onClick={() => activeTab === 'subjects' ? handleOpenSubjectModal() : activeTab === 'skills' ? handleOpenSkillModal() : handleOpenTaskModal()}
         >
-          <HiOutlinePlus size={20} /> Add New {activeTab === 'skills' ? 'Skill' : 'Task'}
+          <HiOutlinePlus size={20} /> Add New {activeTab === 'subjects' ? 'Subject' : activeTab === 'skills' ? 'Skill' : 'Task'}
         </button>
       </div>
 
       <div className="tabs">
+        <button 
+          className={`tab-btn ${activeTab === 'subjects' ? 'active' : ''}`}
+          onClick={() => { setActiveTab('subjects'); setSearchQuery(''); setDifficultyFilter('all'); }}
+        >
+          Subjects ({subjects.length})
+        </button>
         <button 
           className={`tab-btn ${activeTab === 'skills' ? 'active' : ''}`}
           onClick={() => { setActiveTab('skills'); setSearchQuery(''); setDifficultyFilter('all'); }}
@@ -224,7 +272,7 @@ const AdminContent = () => {
                   onClick={() => setDifficultyFilter('advanced')}
                 >Advanced</button>
               </>
-            ) : (
+            ) : activeTab === 'tasks' ? (
               <>
                 <button 
                   className={`segment-btn ${difficultyFilter === 'easy' ? 'active unlocked' : ''}`}
@@ -239,7 +287,7 @@ const AdminContent = () => {
                   onClick={() => setDifficultyFilter('hard')}
                 >Hard</button>
               </>
-            )}
+            ) : null}
           </div>
 
           {activeTab === 'tasks' && (
@@ -262,6 +310,30 @@ const AdminContent = () => {
       </div>
 
       <div className="content-grid">
+        {activeTab === 'subjects' && filteredSubjects.map((subject) => (
+          <motion.div 
+            key={subject._id} 
+            className="card admin-content-card"
+            style={{ borderTop: `4px solid ${subject.color}` }}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            whileHover={{ y: -4, boxShadow: "0 12px 24px -8px rgba(0,0,0,0.4)" }}
+          >
+            <div className="card-header">
+              <div className="skill-icon">{subject.icon}</div>
+              <div className="actions">
+                <button className="btn-icon btn-ghost" title="Edit" onClick={() => handleOpenSubjectModal(subject)}><HiOutlinePencilSquare /></button>
+                <button className="btn-icon btn-danger-ghost" title="Delete" onClick={() => handleDeleteSubject(subject._id)}><HiOutlineTrash /></button>
+              </div>
+            </div>
+            <h3>{subject.name}</h3>
+            <p className="card-description">{subject.description}</p>
+            <div className="card-meta">
+              <span className="meta-item context-label" style={{ margin: 0 }}>Order: {subject.order}</span>
+            </div>
+          </motion.div>
+        ))}
+
         {activeTab === 'skills' && filteredSkills.map((skill) => (
           <motion.div 
             key={skill._id} 
@@ -333,6 +405,21 @@ const AdminContent = () => {
           <p>Try adjusting your search or filters.</p>
         </div>
       )}
+      {activeTab === 'subjects' && filteredSubjects.length === 0 && (
+        <div className="empty-state premium-empty">
+          <span className="empty-icon">📚</span>
+          <h3>No subjects found</h3>
+          <p>Try adjusting your search or create a new subject.</p>
+        </div>
+      )}
+
+      <SubjectModal 
+        isOpen={isSubjectModalOpen} 
+        onClose={handleCloseModals} 
+        onSubmit={handleSaveSubject} 
+        initialData={editingItem} 
+        subjects={subjects}
+      />
 
       <SkillModal 
         isOpen={isSkillModalOpen} 
